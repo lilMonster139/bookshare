@@ -1,0 +1,378 @@
+/* catalog.css — стили каталога BookShare */
+
+/* Отступ под фиксированную навигацию */
+body {
+  padding-top: 120px;
+  background: #f6f2ec;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 40px;
+  background: #3a322b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #f6f2ec;
+  text-decoration: none;
+  gap: 12px;
+}
+nav .logo img {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+}
+nav a {
+  color: #f6f2ec;
+}
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-buttons a {
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color:  #FDF6EB;
+  text-decoration: none;
+  border: 2px solid #FDF6EB;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 16px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.nav-buttons a:hover {
+  background-color: #FDF6EB;
+  color: #483A2D;
+  border-color: #FDF6EB;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+  transform: scale(1.05);
+}
+
+/* Топовая часть каталога */
+.catalog-hero {
+  padding: 40px 100px;
+  background: #f6f2ec;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.catalog-hero h1 {
+  color: #3a322b;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.catalog-hero p {
+  color: #6b635b;
+  margin-top: 6px;
+}
+
+/* Поле поиска */
+.catalog-hero input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+/* Сетка каталога */
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 40px 100px;
+}
+
+/* Карточка товара */
+.book-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+}
+
+.book-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+.book-card .info {
+  padding: 12px 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card h3 {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #3a322b;
+}
+
+.book-card p {
+  flex: 1;
+  font-size: 0.9rem;
+  color: #6b635b;
+  margin-bottom: 10px;
+}
+
+.book-card .meta {
+  font-size: 0.85rem;
+  color: #887257;
+  margin-bottom: 8px;
+}
+
+/* Нижняя панель карточки */
+.actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-small {
+  background: #5b3921;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-small:hover {
+  background: #472e1a;
+}
+
+/* Счётчик корзины */
+.cart-counter {
+  background: #FDF6EB;
+  color: #483A2D;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-left: 10px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .catalog-hero {
+    flex-direction: column;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .catalog-grid {
+    padding: 20px;
+  }
+}
+
+/* overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* окно */
+.modal {
+  background: #fff;
+  width: 420px;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  position: relative;
+  animation: showModal .25s ease;
+}
+
+@keyframes showModal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* кнопка закрытия */
+.close-btn {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* продавец */
+.modal-header {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header img {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* книга */
+.modal-book-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.modal-book-info img {
+  width: 70px;
+  height: 100px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.modal-btn {
+  width: 100%;
+  background: #5b3921;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+/* затемнение фона */
+.popup {
+  display: none; 
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* само окно */
+.popup-content {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 300px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  text-align: center;
+  animation: popupShow .2s ease-out;
+}
+
+@keyframes popupShow {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.popup-btn {
+  background: #5b3921;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  margin-top: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+/* ===== AVATAR: маленькие круглые аватары продавцов на карточке ===== */
+.book-card .price-seller {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* расстояние между ценой и блоком продавца */
+}
+
+.book-card .seller-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.book-card .seller-info img {
+  width: 34px;        /* маленький размер */
+  height: 34px;
+  border-radius: 50%; /* круг */
+  object-fit: cover;
+  display: inline-block;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+/* небольшой стиль для имени продавца рядом с аватаркой */
+.book-card .seller-name {
+  font-size: 0.86rem;
+  color: #6b635b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px; /* чтобы имя не ломало верстку */
+}
+
+/* ===== NAV BAR сверху (чтобы карточки не перекрывали) ===== */
+nav {
+  z-index: 1000; /* навбар всегда сверху */
+}
+
+/* ===== Карточкам даём базовый z-index, но ниже навбара ===== */
+.book-card {
+  position: relative; /* чтобы z-index работал предсказуемо */
+  z-index: 1;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  z-index: 5; /* остаётся ниже nav (1000) */
+}
+.copyright {
+  padding: 10px;
+  text-align: center;
+  background-color: #3a322b; 
+  color: #fff; 
+}

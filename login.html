@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход — BookShare</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #FDF6EB;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header, footer {
+      background-color: #3a322b;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    .card h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .card input {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .card button {
+      width: 100%;
+      padding: 0.75rem;
+      margin-top: 1rem;
+      background-color: #5b3921;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .card button:hover {
+      background-color: #472e1a;
+    }
+    a {
+      display: block;
+      margin-top: 1rem;
+      text-align: center;
+      color: #5b3921;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BookShare</h1>
+    <p>Обмен и продажа любимых книг</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>Вход</h2>
+      <form id="loginForm" method="POST" action="login">
+        <input type="text" id="username" placeholder="Имя пользователя" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+      </form>
+      <a href="register.html">Нет аккаунта? Зарегистрируйтесь</a>
+      <a href="C:\Users\stud8nt\OneDrive\Desktop\курсовая Мыльникова 37ВЕБ\Books Website\index.html" class="back-button">На главную</a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 BookShare — все права защищены кошкой
+  </footer>
+
+  <script>
+    const form = document.getElementById('loginForm');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    const userData = localStorage.getItem('user_' + username);
+    if (!userData) {
+        alert('Пользователь не найден');
+        return;
+    }
+
+    const user = JSON.parse(userData);
+
+    if (user.password !== password) {
+        alert('Неверный пароль');
+        return;
+    }
+
+    // Записываем в localStorage, что пользователь вошёл
+    localStorage.setItem('loggedInUser', username);
+
+    // Переходим на страницу профиля
+    window.location.href = 'profile.html';
+    
+    // после успешного входа, например:
+localStorage.setItem('userProfile', JSON.stringify({
+  name: username,
+  email: '',
+  avatar: 'images/avatar-placeholder.png'
+}));
+
+});
+  </script>
+</body>
+</html>

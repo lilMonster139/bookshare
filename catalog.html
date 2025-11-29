@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Каталог — BookShare</title>
+  <link rel="stylesheet" href="catalog.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo"><img src="images/logo.png" alt="">Книги</a>
+    <div class="nav-buttons">
+      <a href="Us Contact.html">Наши Контакты</a>
+      <a href="login.html">Личный кабинет</a>
+      <a href="cart.html" id="cartLink">Корзина <span id="cartCount" class="cart-counter">0</span></a>
+    </div>
+  </nav>
+
+  <section class="catalog-hero">
+    <div class="hero-text">
+      <h1>Каталог книг</h1>
+      <p>Выбирай из доступных предложений для покупки или обмена.</p>
+    </div>
+    <div class="search-container">
+      <input id="searchInput" placeholder="Поиск по названию или автору">
+    </div>
+  </section>
+
+  <section class="catalog-grid" id="catalogGrid">
+    <!-- Карточки подставит JavaScript -->
+  </section>
+
+  <footer class="copyright">
+    <p>&#169; Право защищено кошкой</p>
+  </footer>
+
+  <!-- Контактный попап -->
+  <div id="contactPopup" class="popup">
+    <div class="popup-content modal">
+      <button id="popupCloseBtn" class="close">×</button>
+
+      <div class="modal-header">
+        <img id="popupSellerAvatar" src="images/avatars/default.jpg" alt="Аватар продавца">
+        <div>
+          <h3 id="popupSellerName">Продавец</h3>
+          <div id="popupSellerCity"></div>
+        </div>
+      </div>
+
+      <div class="modal-book-info">
+        <img id="popupBookImg" src="" alt="" />
+        <div>
+          <h4 id="popupBookTitle"></h4>
+        </div>
+      </div>
+
+      <p><strong>Email:</strong> <a id="popupMailLink" href="#">example@mail.ru</a></p>
+
+      <button id="popupWriteBtn" class="modal-btn">Написать</button>
+    </div>
+  </div>
+
+  <script>
+    // --------------------------
+    // Данные — книги и продавцы
+    // В реальном проекте это будет приходить с сервера (API).
+    // --------------------------
+    const sellers = [
+      { id: 's1', name: 'Иван Петров', city: 'Москва', avatar: 'images/avatars/s1.jpg', contact: 'ivan@example.com' },
+      { id: 's2', name: 'Мария Смирнова', city: 'Санкт-Петербург', avatar: 'images/avatars/s2.jpg', contact: 'masha@mail.ru' },
+      { id: 's3', name: 'Книжный Бутик', city: 'Казань', avatar: 'images/avatars/s3.jpg', contact: 'shop@books.ru' },
+      { id: 's4', name: 'Алексей', city: 'Новосибирск', avatar: 'images/avatars/s4.jpg', contact: 'aleksey@ya.ru' },
+      { id: 's5', name: 'Анна', city: 'Екатеринбург', avatar: 'images/avatars/s5.jpg', contact: 'anna@mail.ru' }
+    ];
+
+    const books = [
+      { id:'b1', title:'Отчаяние', author:'В. Набоков', price:'350 ₽', img:'images/pack1.jpg', desc:'Роман Владимира Набокова, опубликованный в 1934 году.', sellerId:'s1' },
+      { id:'b2', title:'Забывание вещей', author:'Б. Коллинз', price:'420 ₽', img:'images/pack2.jpg', desc:'Исследование памяти и её механизмов.', sellerId:'s2' },
+      { id:'b3', title:'1984', author:'Дж. Оруэлл', price:'290 ₽', img:'images/pack3.jpg', desc:'Классическая антиутопия.', sellerId:'s3' },
+      { id:'b4', title:'Мастер и Маргарита', author:'М. Булгаков', price:'500 ₽', img:'images/pack4.jpg', desc:'Классика русской литературы.', sellerId:'s4' },
+      { id:'b5', title:'Преступление и наказание', author:'Ф. Достоевский', price:'450 ₽', img:'images/pack5.jpg', desc:'Роман о морали и наказании.', sellerId:'s5' },
+      { id:'b6', title:'Собачье сердце', author:'М. Булгаков', price:'220 ₽', img:'images/pack6.jpg', desc:'Юмористическая повесть.', sellerId:'s1' },
+      { id:'b7', title:'Сто лет одиночества', author:'Г. Маркес', price:'480 ₽', img:'images/pack7.jpg', desc:'Магический реализм и семейная сага.', sellerId:'s2' },
+      { id:'b8', title:'Улисс', author:'Дж. Джойс', price:'520 ₽', img:'images/pack8.jpg', desc:'Экспериментальный роман XX века.', sellerId:'s3' },
+      { id:'b9', title:'Жизнь и судьба', author:'В. Гроссман', price:'430 ₽', img:'images/pack9.jpg', desc:'Эпическое повествование о войне.', sellerId:'s4' },
+      { id:'b10', title:'Маленькая жизнь', author:'Х. Янагихара', price:'600 ₽', img:'images/pack10.jpg', desc:'Современная трогательная проза.', sellerId:'s5' }
+    ];
+
+    // --------------------------
+    // Рендер каталога
+    // --------------------------
+    const grid = document.getElementById('catalogGrid');
+
+    function getSellerById(id) {
+      return sellers.find(s => s.id === id) || {name:'Продавец', city:'', avatar:'images/avatars/default.png', id:''};
+    }
+
+    function renderList(list) {
+      grid.innerHTML = '';
+      list.forEach(book => {
+        const seller = getSellerById(book.sellerId);
+        const card = document.createElement('article');
+        card.className = 'book-card';
+        card.innerHTML = `
+          <img src="${book.img}" alt="${book.title}">
+          <div class="info">
+            <div class="meta">${book.author} · <span class="city">${seller.city}</span></div>
+            <h3>${book.title}</h3>
+            <p>${book.desc}</p>
+          </div>
+          <div class="actions">
+            <div class="price-seller">
+              <strong class="price">${book.price}</strong>
+              <span class="seller-info" title="Продавец">
+                <img src="${seller.avatar}" alt="${seller.name}">
+                <span class="seller-name">${seller.name}</span>
+              </span>
+            </div>
+            <div class="buttons">
+              <button class="btn-small addCart" data-id="${book.id}">Добавить</button>
+              <button class="btn-small contact-btn" data-id="${book.id}">Связаться</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // обработчики для кнопок "Добавить в корзину"
+      document.querySelectorAll('.addCart').forEach(btn => {
+        btn.addEventListener('click', () => addToCart(btn.dataset.id));
+      });
+      
+      // привязываем обработчики к кнопкам "Связаться"
+      bindContactButtons();
+    }
+
+    // --------------------------
+    // Корзина (localStorage)
+    // --------------------------
+    function getCart() { 
+      try { 
+        return JSON.parse(localStorage.getItem('cart')) || []; 
+      } catch(e) { 
+        return []; 
+      } 
+    }
+
+    function saveCart(arr) { 
+      localStorage.setItem('cart', JSON.stringify(arr)); 
+      updateCartCount(); 
+    }
+
+    function addToCart(id) {
+      const cart = getCart();
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        item.qty++;
+      } else {
+        cart.push({id, qty:1});
+      }
+      saveCart(cart);
+      // маленькое уведомление
+      alert('Книга добавлена в корзину');
+    }
+
+    function updateCartCount() {
+      const cart = getCart();
+      const el = document.getElementById('cartCount');
+      if (el) {
+        el.textContent = cart.reduce((s, i) => s + i.qty, 0);
+      }
+    }
+
+    // --------------------------
+    // Поиск
+    // --------------------------
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      const filteredBooks = books.filter(b => 
+        b.title.toLowerCase().includes(q) || 
+        b.author.toLowerCase().includes(q)
+      );
+      renderList(filteredBooks);
+    });
+
+    // --- Функция открытия попапа продавца ---
+    function contactSeller(book) {
+      // получаем объект продавца по id
+      const seller = getSellerById(book.sellerId);
+
+      // заполняем поля попапа
+      const popup = document.getElementById("contactPopup");
+      document.getElementById("popupSellerName").textContent = seller.name;
+      document.getElementById("popupSellerCity").textContent = seller.city || '';
+      
+      // аватар продавца
+      const avatarEl = document.getElementById("popupSellerAvatar");
+      if (avatarEl) avatarEl.src = seller.avatar || 'images/avatars/default.png';
+
+      // почта и ссылка mailto
+      const mailLink = document.getElementById("popupMailLink");
+      mailLink.textContent = seller.contact || 'нет';
+      mailLink.href = 'mailto:' + encodeURIComponent(seller.contact || '');
+      // информация о книге
+      const bookTitleEl = document.getElementById('popupBookTitle');
+      const bookImgEl = document.getElementById('popupBookImg');
+      if (bookTitleEl) bookTitleEl.textContent = book.title;
+      if (bookImgEl) bookImgEl.src = book.img;
+
+      // показать попап
+      popup.style.display = 'flex';
+    }
+
+    // Функция для привязки обработчиков к кнопкам "Связаться"
+    function bindContactButtons() {
+      document.querySelectorAll(".contact-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.getAttribute("data-id");
+          const book = books.find(b => b.id === id);
+          if (book) contactSeller(book);
+        });
+      });
+    }
+
+    // закрытие попапа
+    document.getElementById("popupCloseBtn").onclick = () => {
+      document.getElementById("contactPopup").style.display = "none";
+    };
+
+    // закрытие попапа при клике вне его
+    window.onclick = (event) => {
+      const popup = document.getElementById("contactPopup");
+      if (event.target === popup) {
+        popup.style.display = "none";
+      }
+    };
+
+    // кнопка "Написать" в попапе
+    document.getElementById("popupWriteBtn").addEventListener("click", () => {
+      document.getElementById("popupMailLink").click();
+    });
+
+    // Инициализация
+    renderList(books);
+    updateCartCount();
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Продавец — BookShare</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="profile.css"> <!-- твои стили для профиля -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo"><img src="images/logo.png" alt="">Книги</a>
+    <div class="nav-buttons">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="profile.html">Личный кабинет</a>
+    </div>
+  </nav>
+
+  <main>
+    <div id="sellerArea"></div>
+
+    <div class="messages" id="messagesBox"></div>
+
+    <div class="chat-form" id="chatFormWrap">
+      <input id="msgInput" placeholder="Написать сообщение продавцу...">
+      <button id="sendBtn">Отправить</button>
+    </div>
+  </main>
+
+  <script>
+    // вспомогательная функция чтения query string
+    function qs(name){ const u = new URL(location); return u.searchParams.get(name); }
+
+    // те же данные продавцов — можно вынести в отдельный файл
+    const sellers = [
+      { id: 's1', name: 'Иван Петров', city: 'Москва', avatar: 'images/avatars/s1.jpg', contact: 'ivan@example.com' },
+      { id: 's2', name: 'Мария Смирнова', city: 'Санкт-Петербург', avatar: 'images/avatars/s2.jpg', contact: 'masha@mail.ru' },
+      { id: 's3', name: 'Книжный Бутик', city: 'Казань', avatar: 'images/avatars/s3.jpg', contact: 'shop@books.ru' },
+      { id: 's4', name: 'Алексей', city: 'Новосибирск', avatar: 'images/avatars/s4.jpg', contact: 'aleksey@ya.ru' },
+      { id: 's5', name: 'Анна', city: 'Екатеринбург', avatar: 'images/avatars/s5.jpg', contact: 'anna@mail.ru' }
+    ];
+
+    const sellerId = qs('seller');
+    const seller = sellers.find(s=>s.id===sellerId) || sellers[0];
+
+    const sellerArea = document.getElementById('sellerArea');
+    sellerArea.innerHTML = `
+      <div class="seller-card">
+        <img class="seller-avatar" src="${seller.avatar}" alt="${seller.name}">
+        <div class="seller-info">
+          <h2>${seller.name}</h2>
+          <div>${seller.city}</div>
+          <div style="margin-top:8px;color:#6b635b">Email: <a href="mailto:${seller.contact}">${seller.contact}</a></div>
+          <div style="margin-top:8px"><a href="catalog.html">← Вернуться в каталог</a></div>
+        </div>
+      </div>
+    `;
+
+    // простая система сообщений (localStorage)
+    const KEY = 'messages_' + seller.id; // ключ в localStorage
+    function loadMessages(){
+      try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
+      catch(e){ return []; }
+    }
+    function saveMessages(arr){ localStorage.setItem(KEY, JSON.stringify(arr)); }
+
+    const messagesBox = document.getElementById('messagesBox');
+    function renderMessages(){
+      const arr = loadMessages();
+      messagesBox.innerHTML = '';
+      arr.forEach(m=>{
+        const div = document.createElement('div');
+        div.className = 'msg ' + (m.from==='me' ? 'me' : 'them');
+        div.innerHTML = `<div style="font-size:0.85rem;color:#6b635b">${m.user || 'Аноним'}</div><div>${m.text}</div><div style="font-size:0.7rem;color:#999;margin-top:6px">${new Date(m.time).toLocaleString()}</div>`;
+        messagesBox.appendChild(div);
+      });
+      messagesBox.scrollTop = messagesBox.scrollHeight;
+    }
+
+    renderMessages();
+
+    // отправка — если залогинен, используем имя из localStorage (loggedInUser)
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      const input = document.getElementById('msgInput');
+      const text = input.value.trim();
+      if (!text) return;
+      const logged = localStorage.getItem('loggedInUser') || null;
+      if (!logged) {
+        if (!confirm('Чтобы отправить сообщение продавцу, нужно войти. Перейти на страницу входа?')) {
+          return;
+        } else { location.href = 'login.html'; return; }
+      }
+      const arr = loadMessages();
+      arr.push({ from: 'me', user: logged, text, time: Date.now() });
+      saveMessages(arr);
+      input.value = '';
+      renderMessages();
+    });
+
+    // (Опционально) механизм ответа продавца — для демонстрации можно добавить кнопку "Отправить ответ" на странице продавца для владельца
+  </script>
+</body>
+<link rel="stylesheet" href="seller.css">
+</html>

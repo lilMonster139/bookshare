@@ -1,0 +1,26 @@
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #FDF6EB;
+    text-decoration: none;
+    border: 2px solid #FDF6EB;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 16px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+  
+  .back-button:hover {
+    background-color: #FDF6EB;
+    color: #3a322b;
+    border-color: #FDF6EB;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    transform: scale(1.05);
+  }
+  
