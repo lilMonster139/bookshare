@@ -1,4 +1,4 @@
-/* Общий стиль карточек — как в профиле */
+
 .seller-card,
 .messages,
 .chat-form {
@@ -11,7 +11,7 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
 }
 
-/* Карточка продавца */
+
 .seller-card {
     display: flex;
     gap: 20px;
@@ -32,7 +32,7 @@
     color: #3a322b;
 }
 
-/* Сообщения */
+
 .messages {
     height: 300px;
     overflow-y: auto;
@@ -60,7 +60,7 @@
     align-self: flex-start;
 }
 
-/* Форма отправки */
+
 .chat-form {
     display: flex;
     gap: 10px;
@@ -88,3 +88,4 @@
     background: #f6f2ec;
     color: #3a322b;
 }
+
