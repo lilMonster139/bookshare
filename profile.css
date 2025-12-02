@@ -16,7 +16,7 @@ header h1 {
     font-size: 26px;
 }
 
-/* Кнопки в шапке — как в каталоге */
+
 .header-buttons {
     display: flex;
     gap: 20px;
@@ -32,7 +32,7 @@ header h1 {
     transition: 0.25s ease;
 }
 
-/* Ховер — как в каталоге */
+
 .header-btn:hover {
     transform: scale(1.05);
     background: #f6f2ec;
@@ -95,13 +95,13 @@ header h1 {
 
 .chat-card {
   width: 100%;
-  max-width: 480px;  /* как у profile-wrap */
-  margin: 0 auto 40px auto; /* центрирование */
+  max-width: 480px;  
+  margin: 0 auto 40px auto; 
 }
 
 
 
-/* Ставим аватар, профиль и чат в одну колонну */
+
 .profile-wrap {
     width: 100%;
     max-width: 480px !important;
@@ -112,14 +112,14 @@ header h1 {
     padding: 0 !important;
 }
 
-/* Все карточки одинаковой ширины */
+
 .profile-wrap .card,
 .profile-wrap .chat-card {
     width: 100% !important;
     margin: 0 !important;
 }
 
-/* Убираем старые стили, которые ломают */
+
 .card.left,
 .card.right {
     flex: none !important;
@@ -144,7 +144,7 @@ header h1 {
     flex-direction: column;
     gap: 15px;
 }
-/* Сплошная большая карточка */
+
 .big-card {
     width: 100%;
     max-width: 500px;
@@ -159,32 +159,32 @@ header h1 {
     gap: 40px;
 }
 
-/* Центровка всех полей */
+
 .center-input {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
 }
 
-/* Чтобы текст внутри input тоже был по центру */
+
 .center-input::placeholder {
     text-align: center;
 }
 
-/* Выровнять заголовки */
+
 .info-section h2,
 .chat-title {
     text-align: center;
 }
 
-/* Информация в одну колонку */
+
 .single-column {
     display: flex;
     flex-direction: column;
     gap: 6px;
 }
 
-/* Центрируем блок аватарки */
+
 .avatar-section {
     display: flex;
     flex-direction: column;
@@ -192,11 +192,11 @@ header h1 {
     gap: 12px;
 }
 
-/* Ограничиваем ширину чата */
+
 .chat-card {
     width: 100%;
 }
-/* Главная карточка */
+
 .profile-card {
   width: 100%;
   max-width: 500px;
@@ -210,33 +210,33 @@ header h1 {
   gap: 30px;
 }
 
-/* Центрируем аватар + поля */
+
 .avatar-block,
 .info-block,
 .chat-card {
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;   /* центр по горизонтали */
+  align-items: center;   
 }
 
-/* Центровка текстовых полей */
+
 .center-input {
   text-align: center;
 }
 
-/* Чтобы поля были одинаковой ширины и не упирались в края */
+
 .input {
   width: 90%;
   margin: 10px auto;
 }
 
-/* Заголовок в центре */
+
 .info-block h2 {
   margin: 0 0 10px 0;
   text-align: center;
 }
-/* Единый контейнер */
+
 .profile-container {
     width: 100%;
     max-width: 480px;
@@ -246,16 +246,16 @@ header h1 {
     gap: 30px;
 }
 
-/* Каждая секция (аватар / инфо / чат) */
+
 .profile-section {
     background: #fff;
     padding: 24px;
     border-radius: 12px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-    text-align: center; /* центрирует всё внутри */
+    text-align: center; 
 }
 
-/* Центрирование всех input */
+
 .center-input, 
 .profile-section input,
 .profile-section textarea {
@@ -264,7 +264,7 @@ header h1 {
     display: block;
 }
 
-/* Аватар */
+
 .avatar {
     width: 160px;
     height: 160px;
@@ -273,7 +273,7 @@ header h1 {
     margin-bottom: 15px;
 }
 
-/* Чат */
+
 .chat-container {
     max-height: 260px;
     overflow-y: auto;
@@ -286,7 +286,7 @@ header h1 {
     gap: 8px;
 }
 
-/* Сообщения */
+
 .message-sent, .message-received {
     padding: 8px 12px;
     border-radius: 8px;
@@ -309,4 +309,5 @@ header h1 {
   text-align: center;
   background-color: #3a322b; 
   color: #fff; 
+
 }
