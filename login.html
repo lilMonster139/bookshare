@@ -114,13 +114,13 @@ form.addEventListener('submit', e => {
         return;
     }
 
-    // Записываем в localStorage, что пользователь вошёл
+   
     localStorage.setItem('loggedInUser', username);
 
-    // Переходим на страницу профиля
+  
     window.location.href = 'profile.html';
     
-    // после успешного входа, например:
+  
 localStorage.setItem('userProfile', JSON.stringify({
   name: username,
   email: '',
@@ -131,4 +131,5 @@ localStorage.setItem('userProfile', JSON.stringify({
   </script>
 </body>
 </html>
+
 
