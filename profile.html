@@ -35,14 +35,14 @@
 
   <div class="profile-container">
 
-    <!-- Аватар -->
+  
     <div class="profile-section">
         <img id="avatarImg" class="avatar" src="images/avatar-placeholder.png" alt="Аватар">
         <input id="avatarFile" type="file" accept="image/*" class="input">
         <button id="logoutBtn" class="logout-btn">Выйти</button>
     </div>
 
-    <!-- Информация о пользователе -->
+    
     <div class="profile-section">
         <h2>Профиль пользователя</h2>
 
@@ -66,7 +66,7 @@
     <p>&#169; 2025 BookShare — все права защищены кошкой</footer>
 
   <script>
-    // Ключ в localStorage
+    
     const PROFILE_KEY = 'userProfile';
 
     function dataURLtoFile(dataurl, filename) {
@@ -81,7 +81,7 @@
       return new File([u8arr], filename, { type: mime });
     }
 
-    // загрузка текущего профиля
+   
     function loadProfile() {
       const raw = localStorage.getItem(PROFILE_KEY);
       if (!raw) return;
@@ -103,7 +103,7 @@
       alert('Профиль сохранён');
     });
 
-    // загрузка аватара в base64
+    
     document.getElementById('avatarFile').addEventListener('change', (e) => {
       const f = e.target.files[0];
       if (!f) return;
@@ -114,17 +114,16 @@
       reader.readAsDataURL(f);
     });
 
-    // logout
+  
     document.getElementById('logoutBtn').addEventListener('click', () => {
-      // можно удалять profile или просто перейти на вход
-      // localStorage.removeItem(PROFILE_KEY);
+     
       window.location.href = 'login.html';
     });
 
-    // init
+    
     loadProfile();
-    const currentUser = 'user1'; // имя текущего пользователя (можно менять при авторизации)
-const otherUser = 'user2';   // с кем ведётся переписка
+    const currentUser = 'user1'; 
+const otherUser = 'user2';   
 
 function sendMessage() {
   const text = document.getElementById('messageText').value.trim();
@@ -149,13 +148,13 @@ function renderMessages() {
       chatWindow.appendChild(div);
     }
   });
-  chatWindow.scrollTop = chatWindow.scrollHeight; // прокрутка вниз
+  chatWindow.scrollTop = chatWindow.scrollHeight; 
 }
 
-// навесить обработчик
+
 document.getElementById('sendBtn').addEventListener('click', sendMessage);
 
-// загрузка сообщений при открытии
+
 renderMessages();
 
   </script>
@@ -163,3 +162,4 @@ renderMessages();
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="profile.css">
 </html>
+
