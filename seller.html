@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Продавец — BookShare</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="profile.css"> <!-- твои стили для профиля -->
+  <link rel="stylesheet" href="profile.css"> 
   <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
@@ -29,10 +29,10 @@
   </main>
 
   <script>
-    // вспомогательная функция чтения query string
+
     function qs(name){ const u = new URL(location); return u.searchParams.get(name); }
 
-    // те же данные продавцов — можно вынести в отдельный файл
+   
     const sellers = [
       { id: 's1', name: 'Иван Петров', city: 'Москва', avatar: 'images/avatars/s1.jpg', contact: 'ivan@example.com' },
       { id: 's2', name: 'Мария Смирнова', city: 'Санкт-Петербург', avatar: 'images/avatars/s2.jpg', contact: 'masha@mail.ru' },
@@ -57,8 +57,8 @@
       </div>
     `;
 
-    // простая система сообщений (localStorage)
-    const KEY = 'messages_' + seller.id; // ключ в localStorage
+  
+    const KEY = 'messages_' + seller.id; 
     function loadMessages(){
       try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
       catch(e){ return []; }
@@ -80,7 +80,7 @@
 
     renderMessages();
 
-    // отправка — если залогинен, используем имя из localStorage (loggedInUser)
+   
     document.getElementById('sendBtn').addEventListener('click', () => {
       const input = document.getElementById('msgInput');
       const text = input.value.trim();
@@ -98,8 +98,9 @@
       renderMessages();
     });
 
-    // (Опционально) механизм ответа продавца — для демонстрации можно добавить кнопку "Отправить ответ" на странице продавца для владельца
+    
   </script>
 </body>
 <link rel="stylesheet" href="seller.css">
 </html>
+
