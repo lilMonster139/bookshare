@@ -27,14 +27,14 @@
   </section>
 
   <section class="catalog-grid" id="catalogGrid">
-    <!-- Карточки подставит JavaScript -->
+
   </section>
 
   <footer class="copyright">
     <p>&#169; Право защищено кошкой</p>
   </footer>
 
-  <!-- Контактный попап -->
+
   <div id="contactPopup" class="popup">
     <div class="popup-content modal">
       <button id="popupCloseBtn" class="close">×</button>
@@ -61,10 +61,7 @@
   </div>
 
   <script>
-    // --------------------------
-    // Данные — книги и продавцы
-    // В реальном проекте это будет приходить с сервера (API).
-    // --------------------------
+
     const sellers = [
       { id: 's1', name: 'Иван Петров', city: 'Москва', avatar: 'images/avatars/s1.jpg', contact: 'ivan@example.com' },
       { id: 's2', name: 'Мария Смирнова', city: 'Санкт-Петербург', avatar: 'images/avatars/s2.jpg', contact: 'masha@mail.ru' },
@@ -86,9 +83,7 @@
       { id:'b10', title:'Маленькая жизнь', author:'Х. Янагихара', price:'600 ₽', img:'images/pack10.jpg', desc:'Современная трогательная проза.', sellerId:'s5' }
     ];
 
-    // --------------------------
-    // Рендер каталога
-    // --------------------------
+
     const grid = document.getElementById('catalogGrid');
 
     function getSellerById(id) {
@@ -125,18 +120,16 @@
         grid.appendChild(card);
       });
 
-      // обработчики для кнопок "Добавить в корзину"
+      
       document.querySelectorAll('.addCart').forEach(btn => {
         btn.addEventListener('click', () => addToCart(btn.dataset.id));
       });
       
-      // привязываем обработчики к кнопкам "Связаться"
+     
       bindContactButtons();
     }
 
-    // --------------------------
-    // Корзина (localStorage)
-    // --------------------------
+
     function getCart() { 
       try { 
         return JSON.parse(localStorage.getItem('cart')) || []; 
@@ -159,7 +152,7 @@
         cart.push({id, qty:1});
       }
       saveCart(cart);
-      // маленькое уведомление
+  
       alert('Книга добавлена в корзину');
     }
 
@@ -171,9 +164,7 @@
       }
     }
 
-    // --------------------------
-    // Поиск
-    // --------------------------
+
     document.getElementById('searchInput').addEventListener('input', (e) => {
       const q = e.target.value.trim().toLowerCase();
       const filteredBooks = books.filter(b => 
@@ -183,35 +174,35 @@
       renderList(filteredBooks);
     });
 
-    // --- Функция открытия попапа продавца ---
+    
     function contactSeller(book) {
-      // получаем объект продавца по id
+      
       const seller = getSellerById(book.sellerId);
 
-      // заполняем поля попапа
+     
       const popup = document.getElementById("contactPopup");
       document.getElementById("popupSellerName").textContent = seller.name;
       document.getElementById("popupSellerCity").textContent = seller.city || '';
       
-      // аватар продавца
+     
       const avatarEl = document.getElementById("popupSellerAvatar");
       if (avatarEl) avatarEl.src = seller.avatar || 'images/avatars/default.png';
 
-      // почта и ссылка mailto
+    
       const mailLink = document.getElementById("popupMailLink");
       mailLink.textContent = seller.contact || 'нет';
       mailLink.href = 'mailto:' + encodeURIComponent(seller.contact || '');
-      // информация о книге
+    
       const bookTitleEl = document.getElementById('popupBookTitle');
       const bookImgEl = document.getElementById('popupBookImg');
       if (bookTitleEl) bookTitleEl.textContent = book.title;
       if (bookImgEl) bookImgEl.src = book.img;
 
-      // показать попап
+     
       popup.style.display = 'flex';
     }
 
-    // Функция для привязки обработчиков к кнопкам "Связаться"
+    
     function bindContactButtons() {
       document.querySelectorAll(".contact-btn").forEach(btn => {
         btn.addEventListener("click", () => {
@@ -222,12 +213,12 @@
       });
     }
 
-    // закрытие попапа
+    
     document.getElementById("popupCloseBtn").onclick = () => {
       document.getElementById("contactPopup").style.display = "none";
     };
 
-    // закрытие попапа при клике вне его
+    
     window.onclick = (event) => {
       const popup = document.getElementById("contactPopup");
       if (event.target === popup) {
@@ -235,14 +226,15 @@
       }
     };
 
-    // кнопка "Написать" в попапе
+ 
     document.getElementById("popupWriteBtn").addEventListener("click", () => {
       document.getElementById("popupMailLink").click();
     });
 
-    // Инициализация
+    
     renderList(books);
     updateCartCount();
   </script>
 </body>
+
 </html>
